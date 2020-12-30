@@ -16,4 +16,6 @@ pytz;
 requests;
 urllib3;
 whitenoise;
+gunicorn;
+psycopg2;
 }
