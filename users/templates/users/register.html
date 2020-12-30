@@ -5,7 +5,7 @@
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Cadastra ae ᕙ(`▿´)ᕗ</legend>
+                <legend class="border-bottom mb-4">Realizar Cadastro</legend>
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
@@ -14,7 +14,7 @@
         </form>
         <div class="border-top pt-3">
             <small class="text-muted">
-                Tu já é um Bloguerinho? <a class="ml-2" href="{% url 'login' %}">Vamo Logar</a>
+                Ja possui uma conta? <a class="ml-2" href="{% url 'login' %}"> Login </a>
             </small>
         </div>
     </div>
