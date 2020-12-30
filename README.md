@@ -1,2 +1,2 @@
-DESENVOLVIMENTO DA APLICAÇÃO FLOWTER
-Site para registro de pensamentos e emoções
+Desenvolvimento da aplicação Flowter;
+Site para registro de pensamentos e emoções;
