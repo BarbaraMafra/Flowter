@@ -15,3 +15,4 @@ Pillow
 pytz
 requests
 urllib3
+whitenoise
