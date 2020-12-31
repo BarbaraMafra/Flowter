@@ -1,15 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\blog",
-    "\\blog\\static",
     "\\blog\\static\\blog",
-    "\\blog\\templates",
     "\\blog\\templates\\blog",
-    "\\users",
+    "\\trabfon",
     "\\users\\templates",
     "\\users\\templates\\users"
   ],
-  "SelectedNode": "\\blog\\templates\\blog\\post_form.html",
   "PreviewInSolutionExplorer": false
 }
