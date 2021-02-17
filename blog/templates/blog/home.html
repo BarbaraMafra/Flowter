@@ -1,16 +1,58 @@
 {% extends "blog/base.html" %}
 {% block content %}
-    {% for post in posts %}
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+<div class="input-group mb-3">
+  <input id="searchbar" name="searchbar" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" aria-describedby="basic-addon2">
+  <div class="input-group-append">
+    {% load static %}
+    <button class="btn btn-outline-secondary"  type="button"><img src="{% static 'blog/lupa.png' %}" width="28px"></button>
+  </div>
+</div>
+
+    <div id="COMBOIO_FODA"></div>
+    <script>
+      let posts = [
+        {% for post in posts %}
+        {
+          'author': '{{ post.author }}',
+          'date_posted': `{{ post.date_posted|date:"" }}`,
+          'title' : '{{ post.title }}',
+          'content' : `{{ post.content }}`,
+          'url_pic' : `{{ post.author.profile.image.url }}`,
+          'url_post' : `{% url 'post-detail' post.id %}`
+        },
+        {% endfor %}
+      ]; // bloquinho de posts da galera
+      displayContent(posts); // mostra tudo (post)
+      searchbar.addEventListener('keyup', (e) => {  //verifica a teclinha teclada no pc
+        const searchString = e.target.value.toLowerCase(); // termo de pesquisa - o que o usuario ta escrevendo
+        const filtered = posts.filter(poste => { // filtra os posts baseado no que o usuario digitou
+          return (poste.title.toLowerCase().includes(searchString) // titulo
+          || poste.content.toLowerCase().includes(searchString) // conteudo
+          || poste.author.toLowerCase().includes(searchString)); // autor
+        });
+        displayContent(filtered); // mostra os posts encontrados imediatamente
+        console.log(filtered); // debugado
+      });
+
+
+      function displayContent(poster) { // enfia html na veia da pagina (posts)
+        const htmlString = poster.map((post) => {
+          return `
+        <article class="media content-section flow">
+          <img class="rounded-circle article-img" src="${post.url_pic}">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ post.author }}</a>
-              <small class="text-muted">{{ post.date_posted|date:"" }}</small>
+              <a class="mr-2" href="#">${post.author}</a>
+              <small class="text-muted">${post.date_posted}</small>
             </div>
-            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
+            <h2><a class="article-title" href="${post.url_post}">${post.title}</a></h2>
+            <p class="article-content">${post.content}</p>
           </div>
         </article>
-    {% endfor %}
+        `;
+        }).join('');
+        const diva = document.getElementById("COMBOIO_FODA"); // comboio foda - refere a barrinha de pesquisa
+        diva.innerHTML = htmlString; // aqui termina a magia
+      }
+    </script>
 {% endblock content %}

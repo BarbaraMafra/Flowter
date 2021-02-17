@@ -1,5 +1,5 @@
 body {
-  background: #fcf2f7;
+  background: #bebebe;
   color: #333333;
   margin-top: 5rem;
 }
@@ -7,7 +7,7 @@ body {
 
 
 h1, h2, h3, h4, h5, h6 {
-  color: #fffff;
+  color: #272727;
 }
 
 ul {
@@ -15,11 +15,11 @@ ul {
 }
 
 .bg-steel {
-  background-color: #0000ff;
+  background-color: #a018c2;
 }
 
 .site-header .navbar-nav .nav-link {
-  color: #ffebf4;
+  color: #f6d9ff;
 }
 
 .site-header .navbar-nav .nav-link:hover {
@@ -103,4 +103,5 @@ a.article-title:hover {
 .img-profile:hover {
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5)
 }
+
 
