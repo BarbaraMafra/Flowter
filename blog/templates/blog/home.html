@@ -1,5 +1,76 @@
 {% extends "blog/base.html" %}
 {% block content %}
+<style>
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #a018c2;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #a018c2;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  </style>
+<div id="diva" class="col-auto my-1">
+  <div style="position:fixed;bottom:0;right:0;padding:10px;padding-right:20px">
+    <label class="switch">
+      <input type="checkbox" name="tester" id="tester" onclick="displayContent(posts)">
+      <span class="slider round"></span>
+    </label>
+    <span style="color:#6b1281">
+  Rainbow Mode</span>
+  </div>
+</div>
 <div class="input-group mb-3">
   <input id="searchbar" name="searchbar" type="text" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar" aria-describedby="basic-addon2">
   <div class="input-group-append">
@@ -21,22 +92,63 @@
           'url_post' : `{% url 'post-detail' post.id %}`
         },
         {% endfor %}
-      ]; // bloquinho de posts da galera
-      displayContent(posts); // mostra tudo (post)
-      searchbar.addEventListener('keyup', (e) => {  //verifica a teclinha teclada no pc
-        const searchString = e.target.value.toLowerCase(); // termo de pesquisa - o que o usuario ta escrevendo
-        const filtered = posts.filter(poste => { // filtra os posts baseado no que o usuario digitou
-          return (poste.title.toLowerCase().includes(searchString) // titulo
-          || poste.content.toLowerCase().includes(searchString) // conteudo
-          || poste.author.toLowerCase().includes(searchString)); // autor
+      ];
+      displayContent(posts);
+      searchbar.addEventListener('keyup', (e) => {
+        const searchString = e.target.value.toLowerCase();
+        const filtered = posts.filter(poste => {
+          return (poste.title.toLowerCase().includes(searchString)
+          || poste.content.toLowerCase().includes(searchString)
+          || poste.author.toLowerCase().includes(searchString));
         });
-        displayContent(filtered); // mostra os posts encontrados imediatamente
-        console.log(filtered); // debugado
+        displayContent(filtered);
+        console.log(filtered);
       });
+      const cores = [
+          "#ffbcbc", // vermelho
+          "#ffdcbc", // laranja
+          "#ffeebc", // amarelo
+          "#e8ffbc", // verde
+          "#bcffc8", // verdeperto
+          "#bcfff3", // cianeto
+          "#bce3ff", // azulim
+          "#bebcff", // azul
+          "#e0bcff", // purpurina
+          "#ffbced", // pinko
+          "#ffbcce", // pinkão
+        ];
+      let count = -1;
+      function contarepete() {
+        count += 1;
+        if(count > cores.length-1)
+          count = 0;
+        console.log(count)
+        return cores[count];
+      }
+      function displayContent(poster) {
+        const caixinha = document.getElementById("tester");
 
-
-      function displayContent(poster) { // enfia html na veia da pagina (posts)
-        const htmlString = poster.map((post) => {
+        if(caixinha.checked) {
+          var htmlString = poster.map((post) => {
+          return `
+        <article class="media content-section flow" style="background-color:${contarepete()}">
+          <img class="rounded-circle article-img" src="${post.url_pic}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">${post.author}</a>
+              <small class="text-muted">${post.date_posted}</small>
+            </div>
+            <h2><a class="article-title" href="${post.url_post}">${post.title}</a></h2>
+            <p class="article-content">${post.content}</p>
+          </div>
+        </article>
+        `;
+        }).join('');
+        const diva = document.getElementById("COMBOIO_FODA");
+        diva.innerHTML = htmlString;
+        }
+        else {
+          var htmlString = poster.map((post) => {
           return `
         <article class="media content-section flow">
           <img class="rounded-circle article-img" src="${post.url_pic}">
@@ -51,8 +163,12 @@
         </article>
         `;
         }).join('');
-        const diva = document.getElementById("COMBOIO_FODA"); // comboio foda - refere a barrinha de pesquisa
-        diva.innerHTML = htmlString; // aqui termina a magia
+        const diva = document.getElementById("COMBOIO_FODA");
+        diva.innerHTML = htmlString;
+        }
+
+
       }
     </script>
+
 {% endblock content %}
