@@ -40,6 +40,7 @@
                   <img class="rounded-circle navbar-img nav-item img-profile" src="{{ user.profile.image.url }}" href="{% url 'profile' %}">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="/profile/{{ user.username }}">Meu Perfil</a>
                   <a class="dropdown-item" href="{% url 'profile' %}">Configurar Perfil</a>
                   <a class="dropdown-item" href="{% url 'post-create' %}">Criar Flow</a>
                   <a class="dropdown-item" href="{% url 'logout' %}">Sair</a>

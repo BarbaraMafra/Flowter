@@ -95,6 +95,7 @@
         },
         {% endfor %}
       ];
+      console.log(posts);
       displayContent(posts);
       searchbar.addEventListener('keyup', (e) => {
         const searchString = e.target.value.toLowerCase();
@@ -137,7 +138,7 @@
           <img class="rounded-circle article-img" src="${post.url_pic}">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">${post.author}</a>
+              <a class="mr-2" href="profile/${post.author}">${post.author}</a>
               <small class="text-muted">${post.date_posted}</small>
             </div>
             <h2><a class="article-title" href="${post.url_post}">${post.title}</a></h2>
@@ -156,7 +157,7 @@
           <img class="rounded-circle article-img" src="${post.url_pic}">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">${post.author}</a>
+              <a class="mr-2" href="profile/${post.author}">${post.author}</a>
               <small class="text-muted">${post.date_posted}</small>
             </div>
             <h2><a class="article-title" href="${post.url_post}">${post.title}</a></h2>

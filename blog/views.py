@@ -12,10 +12,28 @@ from .models import Post
 
 def home(request):
     context = {
-        'posts': Post.objects.all()
+        'posts': Post.objects.order_by("-date_posted")
     }
+    #print(a[0].get_author()) # TESTE MEUaaa
     return render(request, 'blog/home.html', context)
 
+def profile(request, nominho=None):
+    a = Post.objects.order_by("-date_posted")
+    b = []
+    for i in a:
+        if str(i.get_author()) == str(nominho):
+            b.append(i)
+    context = {
+        'autor': b[0].get_author(),
+        'menino': b[0],
+        'posts': b
+    }
+    print(str(a.query))
+    return render(request, 'blog/profile.html', context)
+
+#class Profile(ListView):
+#    def piquinha(self):
+#        print(self.kwargs)
 
 class PostListView(ListView):
     model = Post
