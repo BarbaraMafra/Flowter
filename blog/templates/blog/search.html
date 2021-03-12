@@ -1,0 +1,43 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<style>
+    .card {
+        display: inline-block;
+		margin: 20px;
+    }
+
+    .article-img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .centraliza {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .miau {
+        padding: 3px;
+        margin: 3px;
+    }
+
+</style>
+{% for perfil in perfis %}
+<div class="card" style="width: 18rem;">
+	<div class="centraliza">
+		<img style="margin-top:10px" class="rounded-circle article-img" src="{{ perfil.image.url }}"></img>
+    </div>
+
+	<div class="card-body">
+        <h5>
+		    <a class="card-title" href="/profile/{{perfil.get_username}}" >{{ perfil.get_username }}</a>
+        </h5>
+		<p class="card-text">{{ perfil.get_email }}&nbsp;</p>
+		<p class="form-group miau">
+            <button class="btn btn-outline-info" type="submit">+ Seguir</button>
+        </p>
+	</div>
+</div>
+{% endfor %}
+{% endblock content %}
