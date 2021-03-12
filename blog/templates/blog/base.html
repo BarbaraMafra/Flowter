@@ -34,7 +34,18 @@
 
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
+              
               {% if user.is_authenticated %}
+              <form class="form-inline my-2 my-md-0" action="{% url 'blog-search' %}">
+                <!-- <input id='nominho' name='nominho' style="margin-right: 20px;" class="form-control" type="text" placeholder="Pesquisar usuário" aria-label="Search"> -->
+                <div class="input-group mb-3" style="margin-right: 20px; margin-top: 10px;">
+                  <input id='nominho' name='nominho'  type="text" class="form-control" placeholder="Pesquisar usuários..." aria-label="Pesquisar" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    {% load static %}
+                    <button class="btn btn-outline-info"  type="button"><img src="{% static 'blog/lupa.png' %}" width="28px"></button>
+                  </div>
+                </div>
+            </form>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <img class="rounded-circle navbar-img nav-item img-profile" src="{{ user.profile.image.url }}" href="{% url 'profile' %}">
@@ -47,8 +58,8 @@
                 </div>
               </li>
               {% else %}
-                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                <a class="nav-item nav-link" href="{% url 'register' %}">Registrar</a>
+                <a class="nav-item nav-link"  href="{% url 'login' %}">Login</a>
+                <a class="nav-item nav-link"  href="{% url 'register' %}">Registrar</a>
               {% endif %}
             </div>
           </div>

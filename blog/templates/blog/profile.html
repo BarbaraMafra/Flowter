@@ -76,14 +76,22 @@
     padding: 0;
     margin: 0;
   }
+
+  .miau {
+    padding: 3px;
+    margin: 3px;
+}
+
+
   .altura {
-    height: 350px;
+    height: 400px;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
     background-color: #631077;
   }
+
 
 .wrapper { 
   /* height: 100%;
@@ -121,12 +129,22 @@ background-size: 1800% 1800%;
     50%{background-position:100% 19%}
     100%{background-position:0% 82%}
 }
+
+.btn-outline-info.focus, .btn-outline-info:focus {
+    box-shadow: 0 0 0 0.2rem rgb(137 23 184 / 50%);
+}
 </style>
 
 <div class="content-section altura wrapper">
-  <img class="rounded-circle article-img pintinho" src="{{ menino.author.profile.image.url }}">
+    
+  <img class="rounded-circle article-img pintinho" src="{{ url_pic.image.url }}">
   <p class="nova"><b>{{ autor }}</b></p>
-  <p class="pequenininho">{{ menino.author.email }}</p>
+  <p class="pequenininho">{{ email }}</p>
+  <p class="form-group miau">
+      <button class="btn btn-outline-info" type="submit">+ Seguir</button>
+  </p>
+    
+
 </div>
 
 {% for post in posts%}

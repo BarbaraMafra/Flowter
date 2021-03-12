@@ -5,7 +5,6 @@ body {
 }
 
 
-
 h1, h2, h3, h4, h5, h6 {
   color: #631077;
 }
@@ -109,6 +108,19 @@ a {
   
 }
 
+.btn-outline-warning:hover {
+  color: #212529;
+  background-color: #b798be;
+  border-color: #e39cf5;
+}
+
+.btn-outline-warning {
+  color: #a018c2;
+  background-color: #af6cc0;
+  background-image: none;
+  border-color: #e39cf5;
+}
+
 a:hover {
   color: #b41dda;
 }
@@ -126,7 +138,7 @@ a.mr-2:hover{
 
 .btn-outline-info {
   color: #a018c2;
-  background-color: #afafaf;
+  background-color: #cecdcd;
   background-image: none;
   border-color: #a018c2;
 }
