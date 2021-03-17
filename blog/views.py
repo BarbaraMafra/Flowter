@@ -21,13 +21,17 @@ from friendship.models import Friend, Follow, Block
 #from minhas_tags import teste_dahora
 
 def home(request):
-    lista_amigos = [request.user]
-    for usuario in Friend.objects.friends(request.user):
-        lista_amigos.append(usuario)
-    context = {
-        'posts': Post.objects.filter(author__in=lista_amigos).order_by("-date_posted")
-    }
-    #print(a[0].get_author()) # TESTE MEUaaa
+    if request.user.is_authenticated():
+        lista_amigos = [request.user]
+        for usuario in Friend.objects.friends(request.user):
+            lista_amigos.append(usuario)
+        context = {
+            'posts': Post.objects.filter(author__in=lista_amigos).order_by("-date_posted")
+        }
+        #print(a[0].get_author()) # TESTE MEUaaa
+    else: 
+        context = {
+            'posts':[]
     return render(request, 'blog/home.html', context)
 
 def verifica_seguindo(request, nominho=None):
