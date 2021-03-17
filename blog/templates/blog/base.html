@@ -2,16 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
-
+    <link rel="icon" type="text/css" href="{% static 'blog/f.ico' %}">
     {% if title %}
         <title>Flowter - {{ title }}</title>
     {% else %}
@@ -32,12 +29,10 @@
               <a class="nav-item nav-link" href="{% url 'blog-about' %}">Sobre</a>
             </div>
 
-            <!-- Navbar Right Side -->
             <div class="navbar-nav">
               
               {% if user.is_authenticated %}
               <form class="form-inline my-2 my-md-0" action="{% url 'blog-search' %}">
-                <!-- <input id='nominho' name='nominho' style="margin-right: 20px;" class="form-control" type="text" placeholder="Pesquisar usuário" aria-label="Search"> -->
                 <div class="input-group mb-3" style="margin-right: 20px; margin-top: 10px;">
                   <input id='nominho' name='nominho'  type="text" class="form-control" placeholder="Pesquisar usuários..." aria-label="Pesquisar" aria-describedby="basic-addon2">
                   <div class="input-group-append">
@@ -46,6 +41,81 @@
                   </div>
                 </div>
             </form>
+            <!--  -->
+            <style>
+              .my-dropdown-toggle::after {
+                content: none;
+              }
+            </style>
+            {% if user.is_authenticated %}
+            {% load minhas_tags %}
+            <!-- VAI TER UM IF AQUI VERIFICANDO SE TEM NOTIFICAÇÃO OU NAO -->
+            <li class="nav-item dropdown" style="margin-top: 10px;">
+              <a class="nav-link dropdown-toggle my-dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {% tem_mais_que_zero request.user as valor %}
+                {% if valor %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" fill="#f6d9ff" class="bi bi-bell-fill" viewBox="0 0 16 16">
+                  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                </svg>
+                {% else %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#f6d9ff" class="bi bi-bell" viewBox="0 0 16 16">
+                  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                </svg>
+                {% endif %}
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                {% tem_mais_que_zero request.user as valor %}
+                {% if valor %}
+                <!-- FAZ NADA -->
+                {% else %}
+                <p class="dropdown-item disabled">Nenhuma Notificação</p>
+                {% endif %}
+                <!-- adiciona cada notificação -->
+                {% teste_dahora request.user as return_val %}
+                {% for key, value in return_val.items %}
+                {% for a in value %}
+                <p class="dropdown-item disabled">
+                  <img class="rounded-circle navbar-img nav-item img-profile" src="{{ a.url }}" href="{% url 'profile' %}">
+                  <a href="/profile/{{ a.nome }}">{{ a.nome }}</a> solicitou amizade<br>
+                  <button onclick="aceitar(this, '{{ a.nome }}')" style="margin-top: 5px;margin-right: 5px" class="btn btn-outline-success">Aceitar</button>
+                  <button onclick="rejeitar(this, '{{ a.nome }}')" style="margin-top: 5px;" class="btn btn-outline-danger">Recusar</button>
+                </p>
+                {% endfor %}
+                {% endfor %}
+                {% endif %}
+                <script>
+                  function aceitar(botao, nominho) {
+                    console.log(`eu vou aceitar ${nominho}`)
+                    fetch(`http://localhost:8000/blog/acceptrequest/?nominho=${nominho}`)
+                      .then(res => res.json())
+                      .then(data => console.log(data))
+                    window.location.reload(true);
+                  }
+                  function rejeitar(botao, nominho) {
+                    console.log(`eu vou aceitar ${nominho}`)
+                    fetch(`http://localhost:8000/blog/rejectrequest/?nominho=${nominho}`)
+                      .then(res => res.json())
+                      .then(data => console.log(data))
+                    window.location.reload(true);
+                  }
+                  function aceitar(botao, nominho) {
+                    console.log(`eu vou aceitar ${nominho}`)
+                    fetch(`http://localhost:8000/blog/acceptrequest/?nominho=${nominho}`)
+                      .then(res => res.json())
+                      .then(data => console.log(data))
+                      window.location.reload(true);
+                  }
+                  function rejeitar(botao, nominho) {
+                    console.log(`eu vou aceitar ${nominho}`)
+                    fetch(`http://localhost:8000/blog/rejectrequest/?nominho=${nominho}`)
+                      .then(res => res.json())
+                      .then(data => console.log(data))
+                      window.location.reload(true);
+                  }
+                </script>
+              </div>
+            </li>
+              <!--  -->
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <img class="rounded-circle navbar-img nav-item img-profile" src="{{ user.profile.image.url }}" href="{% url 'profile' %}">
@@ -76,8 +146,7 @@
             <h3>Links Úteis</h3>
             <p class='text-muted'>Bom dia, alguns links úteis aqui para vocês.
               <ul class="list-group">
-                <a class="list-group-item list-group-item-light" href="http://localhost:8000/admin/" target="_blank">Local host admin</a> 
-                <a class="list-group-item list-group-item-light" href="https://drive.google.com/drive/folders/1qPct0so0Z63tKJW64a8MWNUGxcC2BGue?usp=sharing" target="_blank">Drive do p.i</a>
+                <a class="list-group-item list-group-item-light" href="https://github.com/TioRubio/Flowter" target="_blank">Github</a>
                 <a class="list-group-item list-group-item-light" href="https://www.w3schools.com/html/default.asp" target="_blank">HTML HELP</a>
                 <a class="list-group-item list-group-item-light" href="https://docs.djangoproject.com/pt-br/3.1/" target="_blank">Documentação DJANGO pt-br</a>
               </ul>
@@ -87,8 +156,6 @@
       </div>
     </main>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
