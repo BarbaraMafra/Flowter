@@ -23,19 +23,62 @@
     }
 
 </style>
-{% for perfil in perfis %}
+{% load minhas_tags %}
+{% for usuario in usuarios %}
 <div class="card" style="width: 18rem;">
 	<div class="centraliza">
-		<img style="margin-top:10px" class="rounded-circle article-img" src="{{ perfil.image.url }}"></img>
+		<img style="margin-top:10px" class="rounded-circle article-img" src="{{ usuario.perfil.image.url }}"></img>
     </div>
 
 	<div class="card-body">
         <h5>
-		    <a class="card-title" href="/profile/{{perfil.get_username}}" >{{ perfil.get_username }}</a>
+		    <a class="card-title" href="/profile/{{usuario.perfil.get_username}}" >{{ usuario.perfil.get_username }}</a>
         </h5>
-		<p class="card-text">{{ perfil.get_email }}&nbsp;</p>
+		<p class="card-text">{{ usuario.perfil.get_email }}&nbsp;</p>
 		<p class="form-group miau">
-            <button class="btn btn-outline-info" type="submit">+ Seguir</button>
+            {% solicitou_amizade request.user usuario.perfil.get_username as ret_val %}
+            {% if usuario.eu_mesmo %}
+            <button onclick="rodinha(this, '{{ usuario.perfil.get_username }}')" style="visibility: hidden;"id="botaoSeguir" class="btn btn-outline-info" type="submit">Adicionado</button>
+            {% elif ret_val %}
+            <button onclick="aceitar(this, '{{ usuario.perfil.get_username }}')" style="margin-top: 5px;margin-right: 5px" class="btn btn-outline-success">Aceitar</button>
+            <button onclick="rejeitar(this, '{{ usuario.perfil.get_username }}')" style="margin-top: 5px;" class="btn btn-outline-danger">Recusar</button>
+            {% elif usuario.seguindo %}
+            <button onclick="rodinha(this, '{{ usuario.perfil.get_username }}')" id="botaoSeguir" class="btn btn-outline-info" type="submit">Adicionado</button>
+            {% elif usuario.solicitado %}
+            <button onclick="rodinha(this, '{{ usuario.perfil.get_username }}')" id="botaoSeguir" class="btn btn-outline-info" type="submit">Solicitado</button>
+            {% else %}
+            <button onclick="rodinha(this, '{{ usuario.perfil.get_username }}')" id="botaoSeguir" class="btn btn-outline-info" type="submit">+ Seguir</button>
+            {% endif %}
+            <script>
+                function rodinha(botao, nominho) {
+                  var text = botao.innerHTML;
+                  if(text == '+ Seguir') {
+                    // fazer chamadas pra solicitar
+                    fetch(`http://localhost:8000/blog/addamigo/?destinatario=${nominho}`)
+                      .then(res => res.json())
+                      .then(data => console.log(data))
+                    // muda o texto do botao
+                    //botao.innerHTML = 'Solicitado';
+                    window.location.reload(true);
+                  } else if(text == 'Solicitado') {
+                    // fazer chamadas pra cancelar solicitaçao
+                    fetch(`http://localhost:8000/blog/cancelrequest/?nominho=${nominho}`)
+                      .then(res => res.json())
+                      .then(data => console.log(data))
+                    // muda o texto do botao
+                    //botao.innerHTML = '+ Seguir';
+                    window.location.reload(true);
+                  } else if(text == 'Adicionado') {
+                    // fazer chamada pra remover amigo
+                    fetch(`http://localhost:8000/blog/rmamigo/?amigo_a_remover=${nominho}`)
+                      .then(res => res.json())
+                      .then(data => console.log(data))
+                    // muda o texto do botao
+                    //botao.innerHTML = '+ Seguir';
+                    window.location.reload(true);
+                  }
+                }
+                </script>
         </p>
 	</div>
 </div>
