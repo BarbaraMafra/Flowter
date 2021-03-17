@@ -21,7 +21,7 @@ from friendship.models import Friend, Follow, Block
 #from minhas_tags import teste_dahora
 
 def home(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         lista_amigos = [request.user]
         for usuario in Friend.objects.friends(request.user):
             lista_amigos.append(usuario)
