@@ -32,6 +32,7 @@ def home(request):
     else: 
         context = {
             'posts':[]
+        }
     return render(request, 'blog/home.html', context)
 
 def verifica_seguindo(request, nominho=None):
