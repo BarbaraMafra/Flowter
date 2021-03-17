@@ -20,11 +20,11 @@ class Post(models.Model):
         return self.author
 
 
-class Followers(models.Model):
-    seguidor = models.ForeignKey(User, on_delete=models.CASCADE)
-    seguido = models.ForeignKey(User, on_delete=models.CASCADE, black = True)
-    data_solicitacao = models.DateTimeField(default=timezone.now)
-    ativo = models.BooleanField (blank=true, null=False, default=True)
-
-    def __str__(self):
-        pass
+#class Followers(models.Model):
+#    seguidor = models.ForeignKey(User, on_delete=models.CASCADE)
+#    seguido = models.ForeignKey(User, on_delete=models.CASCADE, blank = True)
+#    data_solicitacao = models.DateTimeField(default=timezone.now)
+#    ativo = models.BooleanField (blank=True, null=False, default=True)
+#
+#    def __str__(self):
+#        pass
