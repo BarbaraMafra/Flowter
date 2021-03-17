@@ -134,16 +134,70 @@ background-size: 1800% 1800%;
     box-shadow: 0 0 0 0.2rem rgb(137 23 184 / 50%);
 }
 </style>
-
+<script>
+  function rodinha(botao) {
+    var text = botao.innerHTML;
+    if(text == '+ Seguir') {
+      // fazer chamadas pra solicitar
+      fetch('http://localhost:8000/blog/addamigo/?destinatario={{ autor }}')
+        .then(res => res.json())
+        .then(data => console.log(data))
+      // muda o texto do botao
+      botao.innerHTML = 'Solicitado';
+    } else if(text == 'Solicitado') {
+      // fazer chamadas pra cancelar solicitaçao
+      fetch('http://localhost:8000/blog/cancelrequest/?nominho={{ autor }}')
+        .then(res => res.json())
+        .then(data => console.log(data))
+      // muda o texto do botao
+      botao.innerHTML = '+ Seguir';
+    } else if(text == 'Adicionado') {
+      // fazer chamada pra remover amigo
+      fetch('http://localhost:8000/blog/rmamigo/?amigo_a_remover={{ autor }}')
+        .then(res => res.json())
+        .then(data => console.log(data))
+      // muda o texto do botao
+      botao.innerHTML = '+ Seguir';
+    }
+  }
+  </script>
 <div class="content-section altura wrapper">
-    
+  {% load friendshiptags %}
+  {% load minhas_tags %}
   <img class="rounded-circle article-img pintinho" src="{{ url_pic.image.url }}">
   <p class="nova"><b>{{ autor }}</b></p>
   <p class="pequenininho">{{ email }}</p>
   <p class="form-group miau">
-      <button class="btn btn-outline-info" type="submit">+ Seguir</button>
+    {% solicitou_amizade request.user autor as ret_val %}
+    {% if eu_mesmo %}
+    <!-- faz nada -->
+    {% elif ret_val %}
+    <button onclick="aceitar(this, '{{ autor }}')" style="margin-top: 5px;margin-right: 5px" class="btn btn-success">Aceitar</button>
+    <button onclick="rejeitar(this, '{{ autor }}')" style="margin-top: 5px;" class="btn btn-danger">Recusar</button>
+    {% elif seguindo %}
+    <button onclick=rodinha(this) id="botaoSeguir" class="btn btn-outline-info" type="submit">Adicionado</button>
+    {% elif solicitado %}
+    <button onclick=rodinha(this) id="botaoSeguir" class="btn btn-outline-info" type="submit">Solicitado</button>
+    {% else %}
+    <button onclick=rodinha(this) id="botaoSeguir" class="btn btn-outline-info" type="submit">+ Seguir</button>
+    {% endif %}
   </p>
-    
+  <script>
+    function aceitar(botao, nominho) {
+      console.log(`eu vou aceitar ${nominho}`)
+      fetch(`http://localhost:8000/blog/acceptrequest/?nominho=${nominho}`)
+        .then(res => res.json())
+        .then(data => console.log(data))
+        window.location.reload(true);
+    }
+    function rejeitar(botao, nominho) {
+      console.log(`eu vou aceitar ${nominho}`)
+      fetch(`http://localhost:8000/blog/rejectrequest/?nominho=${nominho}`)
+        .then(res => res.json())
+        .then(data => console.log(data))
+        window.location.reload(true);
+    }
+  </script>
 
 </div>
 
@@ -161,3 +215,7 @@ background-size: 1800% 1800%;
   </article>
 {% endfor %}
 {% endblock content %}
+
+
+
+
