@@ -4,7 +4,14 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 
 from .models import Profile
+from django.contrib.auth.models import User
 
+@login_required
+def delaccount(request):
+    print('em teoria isso ta deletado')
+    u = User.objects.get(username = request.user.get_username())
+    u.delete()
+    return redirect('blog-home')
 
 def register(request):
     if request.method == 'POST':
