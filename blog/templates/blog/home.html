@@ -1,6 +1,6 @@
 {% extends "blog/base.html" %}
 {% block content %}
-
+{% load static %}
 <style>
   .switch {
     position: relative;
@@ -169,5 +169,15 @@
 
       }
     </script>
-
+        <article class="media content-section flow">
+          <img class="article-img" src="{% static 'blog/f.ico' %}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2">Flowter</a>
+              <small class="text-muted">Desde o início</small>
+            </div>
+            <h2><a class="article-title">Bem-vindo ao Flowter</a></h2>
+            <p class="article-content" style="text-align: justify;">O presente trabalho apresenta a              plataforma online Flowter, que permite aos seus usuários, o registro e              compartilhamento de seus pensamentos e emoções. Neste sentido, a plataforma              apresentada permite às pessoas que expressem como estão se sentindo, a fim de              registrar e ter um acompanhamento de suas emoções, permitindo compartilhá-las com outras pessoas.</p>
+          </div>
+        </article>
 {% endblock content %}
