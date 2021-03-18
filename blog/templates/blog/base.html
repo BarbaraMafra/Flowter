@@ -86,31 +86,17 @@
                 <script>
                   function aceitar(botao, nominho) {
                     console.log(`eu vou aceitar ${nominho}`)
-                    fetch(`http://localhost:8000/blog/acceptrequest/?nominho=${nominho}`)
+                    fetch(`{% url 'acceptrequest' %}?nominho=${nominho}`)
                       .then(res => res.json())
                       .then(data => console.log(data))
                     window.location.reload(true);
                   }
                   function rejeitar(botao, nominho) {
                     console.log(`eu vou aceitar ${nominho}`)
-                    fetch(`http://localhost:8000/blog/rejectrequest/?nominho=${nominho}`)
+                    fetch(`{% url 'rejectrequest' %}?nominho=${nominho}`)
                       .then(res => res.json())
                       .then(data => console.log(data))
                     window.location.reload(true);
-                  }
-                  function aceitar(botao, nominho) {
-                    console.log(`eu vou aceitar ${nominho}`)
-                    fetch(`http://localhost:8000/blog/acceptrequest/?nominho=${nominho}`)
-                      .then(res => res.json())
-                      .then(data => console.log(data))
-                      window.location.reload(true);
-                  }
-                  function rejeitar(botao, nominho) {
-                    console.log(`eu vou aceitar ${nominho}`)
-                    fetch(`http://localhost:8000/blog/rejectrequest/?nominho=${nominho}`)
-                      .then(res => res.json())
-                      .then(data => console.log(data))
-                      window.location.reload(true);
                   }
                 </script>
               </div>
