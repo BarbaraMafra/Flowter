@@ -17,7 +17,10 @@
               {{ p_form|crispy }}
           </fieldset>
           <div class="form-group">
-              <button class="btn btn-outline-info" type="submit">Atualizar</button>
+            <button class="btn btn-outline-info" type="submit">Atualizar</button>
+            <a href="{% url 'delaccount' %}">
+              <button class="btn btn-danger" style="position: absolute; right: 5%;" type="button">Deletar Conta</button>
+            </a>
           </div>
       </form>
     </div>
