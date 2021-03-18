@@ -50,6 +50,20 @@
             <button onclick="rodinha(this, '{{ usuario.perfil.get_username }}')" id="botaoSeguir" class="btn btn-outline-info" type="submit">+ Seguir</button>
             {% endif %}
             <script>
+                function aceitar(botao, nominho) {
+                  console.log(`eu vou aceitar ${nominho}`)
+                  fetch(`{% url 'acceptrequest' %}?nominho=${nominho}`)
+                    .then(res => res.json())
+                    .then(data => console.log(data))
+                    window.location.reload(true);
+                  }
+                function rejeitar(botao, nominho) {
+                  console.log(`eu vou aceitar ${nominho}`)
+                  fetch(`{% url 'rejectrequest' %}?nominho=${nominho}`)
+                    .then(res => res.json())
+                    .then(data => console.log(data))
+                    window.location.reload(true);
+                  }
                 function rodinha(botao, nominho) {
                   var text = botao.innerHTML;
                   if(text == '+ Seguir') {
@@ -58,24 +72,21 @@
                       .then(res => res.json())
                       .then(data => console.log(data))
                     // muda o texto do botao
-                    //botao.innerHTML = 'Solicitado';
-                    window.location.reload(true);
+                    botao.innerHTML = 'Solicitado';
                   } else if(text == 'Solicitado') {
                     // fazer chamadas pra cancelar solicitaçao
                     fetch(`{% url 'cancelrequest' %}?nominho=${nominho}`)
                       .then(res => res.json())
                       .then(data => console.log(data))
                     // muda o texto do botao
-                    //botao.innerHTML = '+ Seguir';
-                    window.location.reload(true);
+                    botao.innerHTML = '+ Seguir';
                   } else if(text == 'Adicionado') {
                     // fazer chamada pra remover amigo
                     fetch(`{% url 'rmamigo' %}?amigo_a_remover=${nominho}`)
                       .then(res => res.json())
                       .then(data => console.log(data))
                     // muda o texto do botao
-                    //botao.innerHTML = '+ Seguir';
-                    window.location.reload(true);
+                    botao.innerHTML = '+ Seguir';
                   }
                 }
                 </script>
