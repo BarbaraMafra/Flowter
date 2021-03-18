@@ -18,8 +18,6 @@ from friendship.models import Block, Follow, Friend, FriendshipRequest
 from django.contrib.auth.models import User
 from friendship.models import Friend, Follow, Block
 
-#from minhas_tags import teste_dahora
-
 def home(request):
     if request.user.is_authenticated:
         lista_amigos = [request.user]
