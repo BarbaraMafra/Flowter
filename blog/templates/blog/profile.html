@@ -139,21 +139,21 @@ background-size: 1800% 1800%;
     var text = botao.innerHTML;
     if(text == '+ Seguir') {
       // fazer chamadas pra solicitar
-      fetch('http://localhost:8000/blog/addamigo/?destinatario={{ autor }}')
+      fetch(`{% url 'addamigo' %}?destinatario={{ autor }}`)
         .then(res => res.json())
         .then(data => console.log(data))
       // muda o texto do botao
       botao.innerHTML = 'Solicitado';
     } else if(text == 'Solicitado') {
       // fazer chamadas pra cancelar solicitaçao
-      fetch('http://localhost:8000/blog/cancelrequest/?nominho={{ autor }}')
+      fetch(`{% url 'cancelrequest' %}?nominho={{ autor }}`)
         .then(res => res.json())
         .then(data => console.log(data))
       // muda o texto do botao
       botao.innerHTML = '+ Seguir';
     } else if(text == 'Adicionado') {
       // fazer chamada pra remover amigo
-      fetch('http://localhost:8000/blog/rmamigo/?amigo_a_remover={{ autor }}')
+      fetch(`{% url 'rmamigo' %}?amigo_a_remover={{ autor }}`)
         .then(res => res.json())
         .then(data => console.log(data))
       // muda o texto do botao
@@ -185,14 +185,14 @@ background-size: 1800% 1800%;
   <script>
     function aceitar(botao, nominho) {
       console.log(`eu vou aceitar ${nominho}`)
-      fetch(`http://localhost:8000/blog/acceptrequest/?nominho=${nominho}`)
+      fetch(`{% url 'acceptrequest' %}?nominho=${nominho}`)
         .then(res => res.json())
         .then(data => console.log(data))
         window.location.reload(true);
     }
     function rejeitar(botao, nominho) {
       console.log(`eu vou aceitar ${nominho}`)
-      fetch(`http://localhost:8000/blog/rejectrequest/?nominho=${nominho}`)
+      fetch(`{% url 'rejectrequest' %}?nominho=${nominho}`)
         .then(res => res.json())
         .then(data => console.log(data))
         window.location.reload(true);
