@@ -98,7 +98,7 @@ def profile(request, nominho=None):
     for i in c:
         if str(i.get_username()) == str(nominho):
             autor = i.get_username()
-            url_pic = i
+            url_pic = i.image_url
             email = i.get_email()
     
     # verifica se é o usuario que foi digitado na url e pega os posts

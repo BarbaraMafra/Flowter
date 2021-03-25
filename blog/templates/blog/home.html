@@ -86,7 +86,7 @@
           'date_posted': `{{ post.date_posted|date:"" }}`,
           'title' : '{{ post.title }}',
           'content' : `{{ post.content }}`,
-          'url_pic' : `{{ post.author.profile.image.url }}`,
+          'url_pic' : `{{ post.author.profile.image_url }}`,
           'url_post' : `{% url 'post-detail' post.id %}`
         },
         {% endfor %}

@@ -6,6 +6,11 @@ from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from .models import Profile
 from django.contrib.auth.models import User
 
+# for use with api
+import requests
+import json
+import os
+
 @login_required
 def delaccount(request):
     print('em teoria isso ta deletado')
@@ -37,6 +42,19 @@ def profile(request):
             u_form.save()
             p_form.save()
             messages.success(request, f'Sua conta foi atualizada!')
+            
+            # send data to api
+            # esse [1:] remove o / do /media para que a imagem possa ser encontrada
+            files = {'image': open(request.user.profile.image.url[1:], 'rb')}
+            response = requests.post('https://api.imgbb.com/1/upload?key=5343cb7d6d9322041daff19a67901f2d', files=files)
+            if response.status_code == 200:
+                request.user.profile.image_url = response.json()['data']['image']['url']
+                request.user.profile.save()
+                print(request.user.profile.image_url)
+            else:
+                print('Tem algo de errado com a api')
+                print(response.content)
+            
             return redirect('profile')
 
     else:

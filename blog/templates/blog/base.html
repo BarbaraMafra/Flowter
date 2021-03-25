@@ -104,7 +104,7 @@
               <!--  -->
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img class="rounded-circle navbar-img nav-item img-profile" src="{{ user.profile.image.url }}" href="{% url 'profile' %}">
+                  <img class="rounded-circle navbar-img nav-item img-profile" src="{{ user.profile.image_url }}" href="{% url 'profile' %}">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   <a class="dropdown-item" href="/profile/{{ user.username }}">Meu Perfil</a>

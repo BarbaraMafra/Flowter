@@ -16,7 +16,9 @@ def teste_dahora(user):
         username = i.from_user
         for perfil in perfis:
             if perfil.get_username() == str(username):
-                url = perfil.image.url
+                #url = perfil.image.url
+                url = perfil.image_url
+                print(url)
                 usuario = {
                     'url': url,
                     'nome': str(username)
