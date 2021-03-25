@@ -19,12 +19,17 @@ from django.contrib.auth.models import User
 from friendship.models import Friend, Follow, Block
 
 def home(request):
+    posts = []
     if request.user.is_authenticated:
         lista_amigos = [request.user]
         for usuario in Friend.objects.friends(request.user):
             lista_amigos.append(usuario)
+        for post in Post.objects.filter(author__in=lista_amigos).order_by("-date_posted"):
+            post.content = post.content.replace('`', '\\`')
+            posts.append(post)
         context = {
-            'posts': Post.objects.filter(author__in=lista_amigos).order_by("-date_posted")
+            'posts': posts
+            #'posts': Post.objects.filter(author__in=lista_amigos).order_by("-date_posted")
         }
         #print(a[0].get_author()) # TESTE MEUaaa
     else: 
